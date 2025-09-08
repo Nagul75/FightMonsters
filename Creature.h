@@ -1,0 +1,58 @@
+//
+// Created by regal on 9/8/25.
+//
+
+#ifndef FIGHTMONSTERS_CREATURE_H
+#define FIGHTMONSTERS_CREATURE_H
+
+#include <string>
+#include <utility>
+
+namespace Creature
+{
+    class Creature
+    {
+    public:
+        Creature(std::string name, const char symbol, const int health, const int damage, const int gold)
+            :m_name(std::move(name)), m_symbol(symbol), m_health(health), m_damage(damage), m_gold(gold)
+        {}
+
+        [[nodiscard]] std::string_view getName() const {return m_name;}
+        [[nodiscard]] char getSymbol() const {return m_symbol;}
+        [[nodiscard]] int getHealth() const {return m_health;}
+        [[nodiscard]] int getDamage() const {return m_damage;}
+        [[nodiscard]] int getGold() const {return m_gold;}
+
+        void reduceHealth(int);
+        [[nodiscard]] bool isDead() const;
+        void addGold(int);
+
+    protected:
+        std::string m_name {};
+        char m_symbol{};
+        int m_health{};
+        int m_damage{};
+        int m_gold{};
+    };
+
+    class Player : public Creature
+    {
+    public:
+        explicit Player(std::string name, const char symbol='@', const int health=10, const int damage=1, const int gold=0)
+            :Creature(std::move(name), symbol, health, damage, gold)
+        {
+        }
+
+        [[nodiscard]] int getLevel() const {return m_level;}
+
+        void levelUp();
+        [[nodiscard]] bool hasWon() const;
+
+    private:
+        int m_level{1};
+    };
+
+
+}
+
+#endif //FIGHTMONSTERS_CREATURE_H
