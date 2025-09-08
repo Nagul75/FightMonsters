@@ -17,6 +17,10 @@ namespace Creature
             :m_name(std::move(name)), m_symbol(symbol), m_health(health), m_damage(damage), m_gold(gold)
         {}
 
+        Creature(const Creature& creature)
+            :Creature(creature.m_name, creature.m_symbol, creature.m_health, creature.m_damage, creature.m_gold)
+        {}
+
         [[nodiscard]] std::string_view getName() const {return m_name;}
         [[nodiscard]] char getSymbol() const {return m_symbol;}
         [[nodiscard]] int getHealth() const {return m_health;}
@@ -50,6 +54,35 @@ namespace Creature
 
     private:
         int m_level{1};
+    };
+
+    class Monster : public Creature
+    {
+    public:
+        static inline Creature monsterData[]
+        {
+            Creature{"dragon", 'D', 20, 4, 100},
+            Creature{"orc", 'o', 4, 2, 25},
+            Creature{"slime", 's', 1, 1, 10}
+        };
+
+        enum Type
+        {
+            dragon,
+            orc,
+            slime,
+            max_types,
+        };
+
+        static_assert(std::size(monsterData) == max_types);
+
+        explicit Monster(const Type monster)
+            :Creature(monsterData[monster])
+        {}
+
+        Monster(std::string name, const char symbol, const int health, const int damage, const int gold)
+            :Creature(std::move(name), symbol, health, damage, gold)
+        {}
     };
 
 
