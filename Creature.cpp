@@ -4,6 +4,8 @@
 
 #include "Creature.h"
 
+#include "Random.h"
+
 void Creature::Creature::addGold(const int gold)
 {
     m_gold+=gold;
@@ -32,6 +34,12 @@ void Creature::Player::levelUp()
         m_damage++;
     }
 }
+
+Creature::Monster Creature::Monster::getRandomMonster()
+{
+    return Monster{static_cast<Monster::Type>(Random::get(0, Monster::max_types - 1))};
+}
+
 
 
 

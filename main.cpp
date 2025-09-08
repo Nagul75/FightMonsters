@@ -5,8 +5,11 @@
 
 int main()
 {
-    Creature::Monster m{ Creature::Monster::Type::slime };
-    std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
+    for (int i{ 0 }; i < 10; ++i)
+    {
+        Creature::Monster m{ Creature::Monster::getRandomMonster() };
+        std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
+    }
 
     return 0;
 }

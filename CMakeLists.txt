@@ -7,4 +7,5 @@ add_executable(FightMonsters main.cpp
         Creature.h
         Creature.cpp
         UserInput.h
-        UserInput.cpp)
+        UserInput.cpp
+        Random.h)

@@ -66,6 +66,8 @@ namespace Creature
             Creature{"slime", 's', 1, 1, 10}
         };
 
+        static Monster getRandomMonster();
+
         enum Type
         {
             dragon,
