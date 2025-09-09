@@ -33,3 +33,23 @@ char UserInput::runOrFight()
         return choice;
     }
 }
+
+char UserInput::drinkPotion()
+{
+    while (true)
+    {
+        std::cout << "Drink Potion? (y/n): ";
+        char choice{};
+        std::cin >> choice;
+        if (!std::cin)
+        {
+            if (std::cin.eof()) std::exit(0);
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input! \n";
+            continue;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (choice != 'y' && choice != 'n') continue;
+        return choice;
+    }
+}
