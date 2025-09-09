@@ -10,6 +10,7 @@
 namespace UserInput
 {
     std::string getName();
+    char runOrFight();
 }
 
 #endif //FIGHTMONSTERS_USERINPUT_H
