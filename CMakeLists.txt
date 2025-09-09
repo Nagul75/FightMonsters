@@ -8,4 +8,6 @@ add_executable(FightMonsters main.cpp
         Creature.cpp
         UserInput.h
         UserInput.cpp
-        Random.h)
+        Random.h
+        Potion.h
+        Potion.cpp)
