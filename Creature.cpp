@@ -32,13 +32,55 @@ void Creature::Player::levelUp()
     {
         m_level++;
         m_damage++;
-        m_health++;
     }
 }
 
 Creature::Monster Creature::Monster::getRandomMonster()
 {
     return Monster{static_cast<Monster::Type>(Random::get(0, Monster::max_types - 1))};
+}
+
+void Creature::Player::drinkPotion(const Potion::Potion potion)
+{
+    if (potion.getPotionType() == Potion::Potion::health)
+    {
+        switch (potion.getPotionSize())
+        {
+        case Potion::Potion::small: m_health += Potion::EffectHealthSmall;
+                                    break;
+        case Potion::Potion::medium: m_health += Potion::EffectHealthMedium;
+                                    break;
+        case Potion::Potion::large: m_health += Potion::EffectHealthLarge;
+                                    break;
+        default: break;
+        }
+    }
+    else if (potion.getPotionType() == Potion::Potion::strength)
+    {
+        switch (potion.getPotionSize())
+        {
+        case Potion::Potion::small: m_damage+=Potion::EffectStrengthSmall;
+            break;
+        case Potion::Potion::medium: m_damage += Potion::EffectStrengthMedium;
+            break;
+        case Potion::Potion::large: m_damage += Potion::EffectStrengthLarge;
+            break;
+        default: break;
+        }
+    }
+    else if (potion.getPotionType() == Potion::Potion::poison)
+    {
+        switch (potion.getPotionSize())
+        {
+        case Potion::Potion::small: m_health -=Potion::EffectPoisonSmall;
+            break;
+        case Potion::Potion::medium: m_health -= Potion::EffectPoisonMedium;
+            break;
+        case Potion::Potion::large: m_health -= Potion::EffectPoisonLarge;
+            break;
+        default: break;
+        }
+    }
 }
 
 

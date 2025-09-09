@@ -3,8 +3,15 @@
 #include "Creature.h"
 #include "Random.h"
 #include "UserInput.h"
+#include "Potion.h"
 
-void attackMonster(Creature::Player& player, Creature::Monster& monster)
+bool chance(const int percent)
+{
+    const int roll{Random::get(1, 100)};
+    return roll <= percent;
+}
+
+void attackMonster(const Creature::Player& player, Creature::Monster& monster)
 {
     monster.reduceHealth(player.getDamage());
     std::cout << "You dealt " << player.getDamage() << " damage to the " << monster.getName() << ".\n";
@@ -16,12 +23,27 @@ void attackPlayer(Creature::Player& player, const Creature::Monster& monster)
     std::cout << "The " << monster.getName() << " dealt " << monster.getDamage() << " damage to you.\n";
 }
 
+void drinkPotion(Creature::Player& player)
+{
+    if (chance(30))
+    {
+        std::cout << "You have found a mythic potion! \n";
+        const Potion::Potion potion{Potion::Potion::getRandomPotion()};
+        const char choice{UserInput::drinkPotion()};
+        if (choice == 'y')
+        {
+            player.drinkPotion(potion);
+            std::cout << "You drank a " << Potion::Potion::sizeNames[potion.getPotionSize()] << " potion of " << Potion::Potion::typeNames[potion.getPotionType()] << "! \n";
+        }
+    }
+}
+
 void fightMonster(Creature::Player& player, Creature::Monster& monster)
 {
     while (!player.isDead() && !monster.isDead())
     {
         std::cout << monster.getName() << ": HP - " << monster.getHealth() << " | DMG - " << monster.getDamage() << '\n';
-        std::cout << player.getName() << ": HP - " << player.getHealth() << " | DMG - " << player.getDamage() << " | GLD - " << player.getGold() << '\n';
+        std::cout << player.getName() << ": HP - " << player.getHealth() << " | DMG - " << player.getDamage() << " | GLD - " << player.getGold() << " | LVL - " << player.getLevel() <<'\n';
 
         const char choice{UserInput::runOrFight()};
         if (choice == 'f')
@@ -33,13 +55,14 @@ void fightMonster(Creature::Player& player, Creature::Monster& monster)
                 player.addGold(monster.getGold());
                 player.levelUp();
                 std::cout << "You have leveled up! HP and DMG increased. \n";
+                drinkPotion(player);
                 continue;
             }
             attackPlayer(player, monster);
         }
         else
         {
-            if (Random::get(0, 1) == 1)
+            if (chance(50))
             {
                 std::cout << "You have successfully fled! \n";
                 return;

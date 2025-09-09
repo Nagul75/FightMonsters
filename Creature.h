@@ -7,6 +7,7 @@
 
 #include <string>
 #include <utility>
+#include "Potion.h"
 
 namespace Creature
 {
@@ -15,10 +16,6 @@ namespace Creature
     public:
         Creature(std::string name, const char symbol, const int health, const int damage, const int gold)
             :m_name(std::move(name)), m_symbol(symbol), m_health(health), m_damage(damage), m_gold(gold)
-        {}
-
-        Creature(const Creature& creature)
-            :Creature(creature.m_name, creature.m_symbol, creature.m_health, creature.m_damage, creature.m_gold)
         {}
 
         [[nodiscard]] std::string_view getName() const {return m_name;}
@@ -51,6 +48,7 @@ namespace Creature
 
         void levelUp();
         [[nodiscard]] bool hasWon() const;
+        void drinkPotion(Potion::Potion potion);
 
     private:
         int m_level{1};
