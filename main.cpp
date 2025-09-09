@@ -23,7 +23,7 @@ void attackPlayer(Creature::Player& player, const Creature::Monster& monster)
     std::cout << "The " << monster.getName() << " dealt " << monster.getDamage() << " damage to you.\n";
 }
 
-void drinkPotion(Creature::Player& player)
+void handlePotionDrop(Creature::Player& player)
 {
     if (chance(30))
     {
@@ -54,8 +54,8 @@ void fightMonster(Creature::Player& player, Creature::Monster& monster)
                 std::cout << "You killed the " << monster.getName() << "!\n";
                 player.addGold(monster.getGold());
                 player.levelUp();
-                std::cout << "You have leveled up! HP and DMG increased. \n";
-                drinkPotion(player);
+                std::cout << "You have leveled up! DMG increased. \n";
+                handlePotionDrop(player);
                 continue;
             }
             attackPlayer(player, monster);
@@ -86,7 +86,7 @@ int main()
     while (!player.hasWon()) // reach level 20 to win
     {
         Creature::Monster monster{Creature::Monster::getRandomMonster()};
-        std::cout << "You have encountered a " << monster.getName() << "(" << monster.getSymbol() << "). \n";
+        std::cout << "\n\nYou have encountered a " << monster.getName() << "(" << monster.getSymbol() << "). \n";
         fightMonster(player, monster);
         if (player.isDead())
         {
