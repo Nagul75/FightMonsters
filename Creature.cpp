@@ -32,6 +32,7 @@ void Creature::Player::levelUp()
     {
         m_level++;
         m_damage++;
+        m_health++;
     }
 }
 
